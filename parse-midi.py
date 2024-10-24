@@ -13,10 +13,10 @@ for track in midi_file.tracks:
     for msg in track:
         if msg.type in ['note_on', 'note_off']:
             note_events.append({
-                'time': msg.time,
-                'note': msg.note,
-                'velocity': msg.velocity,
-                'type': msg.type
+                'time': msg.time,                   # The time delta since the previous note
+                'note': msg.note,                   # The MIDI note number associated with the event.
+                'velocity': msg.velocity,           # The velocity (or intensity) of the note event
+                'type': msg.type                    # The type of MIDI message (either "note_on" or "note_off")
             })
 
 print(note_events)
