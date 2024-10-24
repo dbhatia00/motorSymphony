@@ -10,6 +10,12 @@ import os
 
 basic_pitch_model = Model(ICASSP_2022_MODEL_PATH)
 
+'''
+This file will convert an mp3 file to a midi using Spotify's API.
+Mileage may vary, probably gonna wanna find an API that gives us MIDI instead.
+'''
+
+
 def mp3_to_wav(mp3_file_path, wav_output_path):
     """Converts an MP3 file to WAV format."""
     audio = AudioSegment.from_mp3(mp3_file_path)
