@@ -134,6 +134,9 @@ def processNotes(mid, instrumentChannels, tempoMap, csvWriters, noteNumberRanges
 
 
 def main():
+    print('Performing preprocessing on ' + sys.argv[1] + '...')
+
+    # Some setup stuff
     noteNumberRanges = convertFreqNumber()
     csvFiles, csvWriters = CSVPrep()
 
