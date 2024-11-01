@@ -7,11 +7,11 @@ import sys
 # Define frequency ranges and corresponding MIDI note numbers
 # Reference: https://www.gear4music.com/blog/audio-frequency-range/
 frequency_ranges = [
-    (60, 250),   # Bass
-    (250, 500),  # Low Midrange
-    (500, 1250), # Mid Midrange
-    (1250, 2000), # High Midrange
-    (2000, 8000) # High Frequencies
+    (60, 250),      # Bass
+    (250, 500),     # Low Midrange
+    (500, 1000),    # Mid Midrange
+    (1000, 1500),   # High Midrange
+    (1500, 8000)    # High Frequencies
 ]
 
 # Converts raw frequencies to MIDI note numbers
