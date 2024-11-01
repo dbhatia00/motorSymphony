@@ -7,10 +7,10 @@ import csv
 # May wanna shift to a different range (more midrange, get rid of sub-base)
 # https://www.gear4music.com/blog/audio-frequency-range/
 frequency_ranges = [
-    (20, 60),    # Sub-bass
     (60, 250),   # Bass
     (250, 500),  # Low Midrange
-    (500, 2000), # Midrange
+    (500, 1250), # Mid Midrange
+    (1250, 2000), # High Midrange
     (2000, 8000) # High Frequencies
 ]
 
@@ -37,7 +37,7 @@ for i in range(5):
     csv_writers.append(writer)
 
 # Read the test MIDI file
-mid = MidiFile('audioTestFiles/twinkle-twinkle-little-star.mid') 
+mid = MidiFile('audioTestFiles/holiday.mid') 
 
 # Identify guitar channels
 guitar_channels = set()
@@ -53,7 +53,7 @@ ticks_per_beat = mid.ticks_per_beat
 def ticks_to_seconds(ticks, tempo):
     return ticks * (tempo / 1_000_000) / ticks_per_beat
 
-# First pass: Build the tempo map and identify guitar channels
+# First pass: Build the map of tempos and strip out guitar/piano channels
 # Lots of this was stolen from https://mido.readthedocs.io/en/stable/backends/index.html
 for track in mid.tracks:
     current_program = {}            # Dict for current instrument for each channel within the file
@@ -116,7 +116,7 @@ for track in mid.tracks:
                 time_on = ongoing_notes[msg.channel].pop(note)
                 
                 # Determine which frequency range the note belongs to
-                # Established freq conversion from midi
+                # Established freq conversion from midi - https://newt.phys.unsw.edu.au/jw/notes.html
                 frequency = 440 * (2 ** ((note - 69) / 12))
                 for idx, (low_note, high_note) in enumerate(note_number_ranges):
                     if low_note <= note <= high_note:
