@@ -8,12 +8,12 @@ ticks_per_beat = 480
 def seconds_to_ticks(seconds, tempo):
     return int((seconds * 1_000_000) / tempo * ticks_per_beat)
 
-# Read the tempo from the original MIDI file (assuming it's constant)
-tempo = 429000  # Default tempo (120 BPM)
+# Read the tempo from the original MIDI file (assuming it's constant (It typically isn't but this is a shitty test script anyways))
+tempo = 500000  # Default tempo (120 BPM)
 
 for i in range(5):
-    csv_filename = f'frequency_range_{i+1}.csv'
-    midi_filename = f'frequency_range_{i+1}.mid'
+    csv_filename = f'tempFileDump/frequency_range_{i+1}.csv'
+    midi_filename = f'tempFileDump/frequency_range_{i+1}.mid'
     
     mid = MidiFile()
     mid.ticks_per_beat = ticks_per_beat
