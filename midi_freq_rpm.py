@@ -10,7 +10,7 @@ def midi_to_frequency(midi_note):
 def frequency_to_rpm(frequency):
     return frequency * 60
 
-# Example usage with CSV
+# Usage with CSV
 def convert_csv_to_rpm(csv_file_path):
     # Read the CSV file
     df = pd.read_csv(csv_file_path)
