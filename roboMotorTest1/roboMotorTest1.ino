@@ -1,14 +1,17 @@
 #include <AccelStepper.h>
 
-// Define pins for Motor 1 and Motor 2
+// Define pins for Motor 1, Motor 2, and Motor 3
 #define stepPin1 3
 #define dirPin1 2
 #define stepPin2 5
 #define dirPin2 4
+#define stepPin3 9
+#define dirPin3 8
 
 // Create stepper objects for each motor
 AccelStepper motor1(AccelStepper::DRIVER, stepPin1, dirPin1);
 AccelStepper motor2(AccelStepper::DRIVER, stepPin2, dirPin2);
+AccelStepper motor3(AccelStepper::DRIVER, stepPin3, dirPin3);
 
 unsigned long startMillis;
 unsigned long currentMillis;
@@ -35,11 +38,13 @@ int planList[][3] = {
 int planListSize = sizeof(planList) / sizeof(planList[0]);
 
 void setup() {
-  // Set maximum speed and acceleration for both motors
+  // Set maximum speed and acceleration for all motors
   motor1.setMaxSpeed(1000);
   motor1.setAcceleration(500);
   motor2.setMaxSpeed(1000);
   motor2.setAcceleration(600);
+  motor3.setMaxSpeed(1000);
+  motor3.setAcceleration(600);
 }
 
 void loop() {
@@ -58,14 +63,16 @@ void loop() {
 void note(int pitch, unsigned long startTime, unsigned long endTime) {
   unsigned long duration = endTime - startTime;
   startMillis = millis();
-  // Set different speeds for both motors
+  // Set different speeds for all motors
   motor1.setSpeed(pitch);
   motor2.setSpeed(pitch);
+  motor3.setSpeed(pitch);
   // Run motors for the specified duration
   while ((currentMillis = millis()) - startMillis < duration) {
     // Continuously run the motors
     motor1.runSpeed();
     motor2.runSpeed();
+    motor3.runSpeed();
   }
 }
 
@@ -75,6 +82,7 @@ void pause(int duration) {
   while ((currentMillis = millis()) - startMillis < duration) {
     motor1.stop();
     motor2.stop();
+    motor3.stop();
   }
   delay(10); // Small delay to ensure motors fully stop
 }
