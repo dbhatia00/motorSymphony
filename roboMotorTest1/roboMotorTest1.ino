@@ -6,6 +6,13 @@
 #define stepPin2 5
 #define dirPin2 4
 
+// Create stepper objects for each motor
+AccelStepper motor1(AccelStepper::DRIVER, stepPin1, dirPin1);
+AccelStepper motor2(AccelStepper::DRIVER, stepPin2, dirPin2);
+
+unsigned long startMillis;
+unsigned long currentMillis;
+
 // A few useful notes
 int a = 440;
 int b = 494;
@@ -15,12 +22,17 @@ int e = 330;
 int f = 349;
 int g = 392;
 
-// Create stepper objects for each motor
-AccelStepper motor1(AccelStepper::DRIVER, stepPin1, dirPin1);
-AccelStepper motor2(AccelStepper::DRIVER, stepPin2, dirPin2);
-
-unsigned long startMillis;
-unsigned long currentMillis;
+// Plan list containing {note, start time, end time} entries
+int planList[][3] = {
+  {c, 0, 400},
+  {c, 400, 800},
+  {g, 800, 1200},
+  {g, 1200, 1600},
+  {a, 1600, 2000},
+  {a, 2000, 2400},
+  {g, 2400, 2800}
+};
+int planListSize = sizeof(planList) / sizeof(planList[0]);
 
 void setup() {
   // Set maximum speed and acceleration for both motors
@@ -31,23 +43,20 @@ void setup() {
 }
 
 void loop() {
-  note(c, 400);
-  pause(200);
-  note(c, 400);
-  pause(200);
-  note(g, 400);
-  pause(200);
-  note(g, 400);
-  pause(200);
-  note(a, 400);
-  pause(200);
-  note(a, 400);
-  pause(200);
-  note(g, 400);
-  pause(1000);
+  for (int i = 0; i < planListSize; i++) {
+    int pitch = planList[i][0];
+    unsigned long startTime = planList[i][1];
+    unsigned long endTime = planList[i][2];
+    note(pitch, startTime, endTime);
+    if (i < planListSize - 1) {
+      pause(200);
+    }
+  }
+  pause(1000); // Pause before restarting the loop
 }
 
-void note(int pitch, int duration) {
+void note(int pitch, unsigned long startTime, unsigned long endTime) {
+  unsigned long duration = endTime - startTime;
   startMillis = millis();
   // Set different speeds for both motors
   motor1.setSpeed(pitch);
