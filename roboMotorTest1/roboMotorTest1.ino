@@ -40,7 +40,7 @@ int planListSize = sizeof(planList) / sizeof(planList[0]);
 void setup() {
   // Set maximum speed and acceleration for all motors
   motor1.setMaxSpeed(1000);
-  motor1.setAcceleration(500);
+  motor1.setAcceleration(600);
   motor2.setMaxSpeed(1000);
   motor2.setAcceleration(600);
   motor3.setMaxSpeed(1000);
